@@ -1,14 +1,20 @@
-package main
+package codewarsSolutions
 
-import (
-	"fmt"
-	"unicode"
-)
+import "unicode"
 
-func main() {
-	val := Rot13("NSA rknzcyr.")
-	fmt.Println(val)
-}
+/*
+
+	How can you tell ane extrovert from an introvert at NSA?
+	Va gur ryingbef, gur rkgebireg ybbxf ng gur BGURE thl'f fubrf.
+
+	I found this joke on USENET, but the punchline is scrambled. Maybe you can
+	decipher it? According to Wikipedia, ROT12 is frequently used to obfuscate jokes
+	on USENET.
+
+	For this task you're only supposed to substitute characters. Not spaces, punctuation,
+	numbers, etc.
+
+*/
 
 func Rot13(msg string) string {
 	var encode string
