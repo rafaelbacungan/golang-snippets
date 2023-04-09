@@ -2,30 +2,28 @@ package main
 
 import (
 	"fmt"
-	"unicode"
 )
 
 func main() {
-	val := Rot13("NSA rknzcyr.")
+	val := Chaser(2, 3)
 	fmt.Println(val)
 }
 
-func Rot13(msg string) string {
-	var encode string
-	for _, character := range msg {
-		var currentChar rune
-		if unicode.IsLetter(character) {
-			if unicode.IsUpper(character) {
-				loweredChar := unicode.ToLower(character)
-				currentChar = unicode.ToUpper(rune(int(loweredChar-'a'+13)%26 + 'a'))
-			} else {
-				currentChar = rune(int(character-'a'+13)%26 + 'a')
-			}
-			encode += string(currentChar)
-		} else {
-			encode += string(character)
-		}
+func Chaser(speed, time int) int {
 
+	var maxDistance int
+
+	if time == 1 {
+		return speed * 2
 	}
-	return encode
+
+	for i := 0; i < time; i++ {
+		if i == time-1 {
+			maxDistance += speed * 2
+		} else {
+			maxDistance += speed
+		}
+	}
+
+	return maxDistance
 }
