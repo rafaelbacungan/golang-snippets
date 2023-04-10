@@ -3,34 +3,35 @@ package webscraper
 import (
 	"fmt"
 	"github.com/gocolly/colly"
+	"strings"
 )
 
 func testWebScrape() {
 	// Instantiate default collector
-	//var articles []Articles
-	//var pagesToScrape []string
+	pageToScrape := "https://dev.to"
+	// pageToScrape := "https://www.technologyreview.com/topic/artificial-intelligence/"
 
-	pageToScrape := "https://dev.to/search?q=golang"
-
-	// current iteration
-	//i := 1
-	// max pages to scrape
-	//limit := 5
-	//
 	// Initialize a Colly instance
 	c := colly.NewCollector()
 	c.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
 
 	// iterating over the list of pagination links to implement the crawling logic
-	c.OnHTML("a[href", func(e *colly.HTMLElement) {
-		fmt.Println("I have reached the crawling logic...")
-		fmt.Println("This is the text: ", e.Text)
-		fmt.Println("This is the link: ", e.Attr("href"))
-		// article := Articles{}
-		// article.url = e.ChildAttr("a", "href")
-		// fmt.Println("article url: ", article.url)
-		// articles = append(articles, article)
+	c.OnHTML("div.crayons-story", func(e *colly.HTMLElement) {
+		tags := e.ChildText("a.crayons-tag")
+		if containsTag(tags, "#react") {
+			fmt.Println("Title: ", e.ChildText("h2.crayons-story__title"))
+			fmt.Println("Author: ", e.ChildText("a.crayons-story__secondary"))
+			fmt.Println("Link: ", pageToScrape+e.ChildAttr("a", "href"))
+		}
 	})
 
 	c.Visit(pageToScrape)
+}
+
+func containsTag(tags string, tag string) bool {
+	if strings.Contains(tags, tag) {
+		return true
+	} else {
+		return false
+	}
 }
