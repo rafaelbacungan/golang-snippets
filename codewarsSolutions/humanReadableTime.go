@@ -1,13 +1,6 @@
-package main
+package codewarsSolutions
 
-import (
-	"fmt"
-	"strconv"
-)
-
-func main() {
-	fmt.Println(HumanReadableTime(359999))
-}
+import "strconv"
 
 /*
 	Write a function, which takes a non-negative integer (seconds) as input and
