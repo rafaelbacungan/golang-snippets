@@ -1,11 +1,4 @@
-package main
-
-import "fmt"
-
-func main() {
-	vals := []int{2, 4, 0, 100, 4, 11, 2602, 36}
-	fmt.Println(FindOutlier(vals))
-}
+package codewarsSolutions
 
 /*
 
