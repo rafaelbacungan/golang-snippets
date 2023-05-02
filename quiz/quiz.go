@@ -12,8 +12,6 @@ import (
 func Quiz() {
 	csvFilename := flag.String("csv", "problems.csv", "a csv file in the format of"+
 		"'question,answer'")
-	flag.Parse()
-
 	timeLimit := flag.Int("limit", 30, "the time limit for the quiz in seconds")
 	flag.Parse()
 
@@ -34,20 +32,26 @@ func Quiz() {
 	// <-timer.C
 
 	correct := 0
+problemloop:
 	for i, p := range problems {
-		select {
-		case <-timer.C:
-			fmt.Printf("Problem #%d: %s = \n", i+1, p.q)
-			return
-		default:
+		fmt.Printf("Problem #%d: %s = ", i+1, p.q)
+		answerCh := make(chan string)
+
+		go func() {
 			var answer string
 			fmt.Scanf("%s\n", &answer)
+			answerCh <- answer
+		}()
+
+		select {
+		case <-timer.C:
+			fmt.Println()
+			break problemloop
+		case answer := <-answerCh:
 			if answer == p.a {
-				fmt.Println("Correct!")
 				correct++
 			}
 		}
-
 	}
 
 	fmt.Printf("You scored %d out of %d.\n", correct, len(problems))
