@@ -1,7 +1,8 @@
 package main
 
-import "GolangSnippets/quiz"
+import "GolangSnippets/restAPI"
 
 func main() {
-	quiz.Quiz()
+	// quiz.Quiz()
+	restAPI.RestAPI()
 }
