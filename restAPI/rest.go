@@ -17,10 +17,19 @@ func RestAPI() {
 	// Used to instantiate the server
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", homeLink)
+	router.HandleFunc("/event", createEvent).Methods("POST")
+	router.HandleFunc("/events/{id}", getOneEvent).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
 // Dummy database
+/*
+	Next, we’ll create a dummy database to store our events.
+
+	For our event struct, we will only be using the Title and Description fields. The slice, or dummy database, should
+	only hold event structs. Therefore, from the slice, we can call a new event struct, read what it says change it if
+	necessary, or delete it.
+*/
 type event struct {
 	ID          string `json:"ID"`
 	Title       string `json:"Title"`
@@ -37,6 +46,16 @@ var events = allEvents{
 	},
 }
 
+// Creating an event
+/*
+	The data for creating a new event comes from the user's end when the user inputs data in the form of an http request
+	data. When input, the request data is not in a form that is readable by humans, so to translate it into a slice, we
+	use the package ioutil.
+
+	After it has been translated into a slice we fit into an event struct by unmarshalling it. Once the slice is
+	successfully created, we can append the event struct into the new events slice and show the new event with an http
+	response of 201 Created Status Code.
+*/
 func createEvent(w http.ResponseWriter, r *http.Request) {
 	var newEvent event
 	reqBody, err := ioutil.ReadAll(r.Body)
@@ -46,7 +65,27 @@ func createEvent(w http.ResponseWriter, r *http.Request) {
 
 	json.Unmarshal(reqBody, &newEvent)
 	events = append(events, newEvent)
+	fmt.Println(events)
 	w.WriteHeader(http.StatusCreated)
 
 	json.NewEncoder(w).Encode(newEvent)
+}
+
+// Get an event
+/*
+	By using the GET Method, we will be able to access the endpoint for getting one event and it will look like this
+	/events/{id}.
+
+	Within Gorilla Mu, we can obtain the value to be inserted into the "id" to filter out a selected event from the
+	events slice. Once an "id" that resembles the input "id" is located, its value is obtained from the events slice
+	and displayed as a response to the user within the API.
+*/
+func getOneEvent(w http.ResponseWriter, r *http.Request) {
+	eventID := mux.Vars(r)["id"]
+
+	for _, singleEvent := range events {
+		if singleEvent.ID == eventID {
+			json.NewEncoder(w).Encode(singleEvent)
+		}
+	}
 }
