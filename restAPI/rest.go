@@ -20,6 +20,8 @@ func RestAPI() {
 	router.HandleFunc("/event", createEvent).Methods("POST")
 	router.HandleFunc("/events/{id}", getOneEvent).Methods("GET")
 	router.HandleFunc("/events", getAllEvents).Methods("GET")
+	router.HandleFunc("/events/{id}", updateEvent).Methods("PATCH")
+	router.HandleFunc("/events/{id}", deleteEvent).Methods("DELETE")
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
@@ -101,7 +103,7 @@ func getAllEvents(w http.ResponseWriter, r *http.Request) {
 
 // Update an event
 /*
-	We use a PATCH method and an endpoint of /evets/{id} to update an existing event. Again, with the help of Gorilla
+	We use a PATCH method and an endpoint of /events/{id} to update an existing event. Again, with the help of Gorilla
 	Mux, we find the value of the "id" has been located, we can change the values of the Title and Description fields
 	within the event struct.
 
@@ -125,6 +127,24 @@ func updateEvent(w http.ResponseWriter, r *http.Request) {
 			singleEvent.Description = updatedEvent.Description
 			events[i] = singleEvent
 			json.NewEncoder(w).Encode(singleEvent)
+		}
+	}
+}
+
+// Remove an event
+/*
+	To remove an event from the API, we need to use the DELETE Method and the same endpoint, which is /events/{id}.
+	Again, we will use Gorilla Mux to obtain the alue of the "id" and use that information to filter for the requested
+	event in the events slice. Once the correct "id" is located, we can delete the occurrence in the slice and provide
+	the user with a successful deletion message.
+*/
+func deleteEvent(w http.ResponseWriter, r *http.Request) {
+	eventID := mux.Vars(r)["id"]
+
+	for i, singleEvent := range events {
+		if singleEvent.ID == eventID {
+			events = append(events[:i], events[i+1:]...)
+			fmt.Fprintf(w, "The event with ID %v has been deleted successfully", eventID)
 		}
 	}
 }
