@@ -98,3 +98,33 @@ func getOneEvent(w http.ResponseWriter, r *http.Request) {
 func getAllEvents(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(events)
 }
+
+// Update an event
+/*
+	We use a PATCH method and an endpoint of /evets/{id} to update an existing event. Again, with the help of Gorilla
+	Mux, we find the value of the "id" has been located, we can change the values of the Title and Description fields
+	within the event struct.
+
+	Then, we change the value of the struct in the events slice. Next, we return the updated value for the event
+	struct to the user as a response.
+*/
+func updateEvent(w http.ResponseWriter, r *http.Request) {
+	eventID := mux.Vars(r)["id"]
+	var updatedEvent event
+
+	reqBody, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		fmt.Fprintf(w, "Kindly enter data with the event title and description only in order to update")
+	}
+
+	json.Unmarshal(reqBody, &updatedEvent)
+
+	for i, singleEvent := range events {
+		if singleEvent.ID == eventID {
+			singleEvent.Title = updatedEvent.Title
+			singleEvent.Description = updatedEvent.Description
+			events[i] = singleEvent
+			json.NewEncoder(w).Encode(singleEvent)
+		}
+	}
+}
