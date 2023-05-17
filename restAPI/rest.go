@@ -19,6 +19,7 @@ func RestAPI() {
 	router.HandleFunc("/", homeLink)
 	router.HandleFunc("/event", createEvent).Methods("POST")
 	router.HandleFunc("/events/{id}", getOneEvent).Methods("GET")
+	router.HandleFunc("/events", getAllEvents).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
@@ -88,4 +89,12 @@ func getOneEvent(w http.ResponseWriter, r *http.Request) {
 			json.NewEncoder(w).Encode(singleEvent)
 		}
 	}
+}
+
+// Get all events
+/*
+	In order to gather all events in the slice, you simply need to display the entire events slice.
+*/
+func getAllEvents(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(events)
 }
