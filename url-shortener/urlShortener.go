@@ -1,5 +1,7 @@
 package url_shortener
 
-func UrlShortener() {
+import "fmt"
 
+func UrlShortener() {
+	fmt.Printf("Hello World")
 }
