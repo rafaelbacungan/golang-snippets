@@ -1,8 +1,7 @@
 package main
 
-import "GolangSnippets/restAPI"
+import url_shortener "GolangSnippets/url-shortener"
 
 func main() {
-	// quiz.Quiz()
-	restAPI.RestAPI()
+	url_shortener.UrlShortener()
 }
