@@ -19,16 +19,16 @@ func UrlShortener() {
 	// Build the YAMLHandler using the mapHandler as the fallback
 	yaml := `
 	- path: /urlshort
-	  url: https://github.com/gophercises/urlst
-	- path /urlshort-final
-	  url: https://github.com/gophercises/urlshort/tree/solution
+	  url: https://github.com/gophercises/urlshort
+	- path: /urlshort-final
+	  url: https://github.com/gophercises/urlshort/tree/final
 	`
 
 	yamlHandler, err := YAMLHandler([]byte(yaml), mapHandler)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Starting the sver on :8080")
+	fmt.Println("Starting the server on :8080")
 	http.ListenAndServe(":8080", yamlHandler)
 }
 
