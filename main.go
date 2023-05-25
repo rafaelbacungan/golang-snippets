@@ -1,7 +1,9 @@
 package main
 
-import url_shortener "GolangSnippets/url-shortener"
+import "GolangSnippets/codewarsSolutions"
 
 func main() {
-	url_shortener.UrlShortener()
+	// url_shortener.UrlShortener()
+	// concurrency.ConcurrencySample()
+	codewarsSolutions.CountingDuplicates("aA11")
 }
