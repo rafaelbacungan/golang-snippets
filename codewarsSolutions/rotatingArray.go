@@ -2,28 +2,42 @@ package codewarsSolutions
 
 import "fmt"
 
+// TODO: Find a way to refactor this
 func RotatingArray(testArray [][]int) {
-	// fmt.Printf("Hello World")
-	finalArray := []int{}
+	up := 0
+	down := len(testArray) - 1
+	left := 0
+	right := len(testArray[down]) - 1
+	dir := 0
+	finalArr := []int{}
 
-	// loop through the array
-	// if i == 0 then push all variables to the finalArray
-	// if i > 1 but < len(testArray) then push the last variable to the finalArray
-	// if i == len(testArray) then push all variables to the finalArray in reverse order
-	// if i < len(testArray) but i > 0 then push the first variable to the finalArray in reverse order
-	// if i == 1 then push all variables to the finalArray in reverse order except the last variable
+	fmt.Println(down, right)
 
-	fmt.Println(testArray)
-	for i := 0; i < len(testArray); i++ {
-		for j := 0; j < len(testArray[i]); j++ {
-			if i == 0 {
-				finalArray = append(finalArray, testArray[i][j])
-			} else if i > 0 && i < len(testArray)-1 {
-
-			} else if i == len(testArray)-1 {
-
+	for up <= down && left <= right {
+		if dir == 0 {
+			for i := left; i <= right; i++ {
+				finalArr = append(finalArr, testArray[up][i])
 			}
-
+			up++
+		} else if dir == 1 {
+			for i := up; i <= down; i++ {
+				finalArr = append(finalArr, testArray[i][right])
+			}
+			right--
+		} else if dir == 2 {
+			for i := right; i >= left; i-- {
+				finalArr = append(finalArr, testArray[down][i])
+			}
+			down--
+		} else if dir == 3 {
+			for i := down; i >= up; i-- {
+				finalArr = append(finalArr, testArray[i][left])
+			}
+			left++
 		}
+		dir = (dir + 1) % 4
 	}
+
+	fmt.Println(finalArr)
+
 }
