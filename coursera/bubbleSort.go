@@ -2,16 +2,14 @@ package coursera
 
 import "fmt"
 
-func BubbleSort(arr []int) {
-	// Create a bubble sort algorithm
-	fmt.Println("this is a bubble sort algorithm")
-	fmt.Println(arr)
-	for i := 0; i < len(arr)-1; i++ {
-		for j := 0; j < len(arr)-i-1; j++ {
-			Swap(arr, j)
+func BubbleSort(slice []int) {
+	fmt.Println("presorted slice: ", slice)
+	for i := 0; i < len(slice)-1; i++ {
+		for j := 0; j < len(slice)-i-1; j++ {
+			Swap(slice, j)
 		}
 	}
-	fmt.Println(arr)
+	fmt.Println("sorted slice", slice)
 }
 
 func Swap(swapSlice []int, i int) []int {
