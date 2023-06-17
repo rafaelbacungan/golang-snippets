@@ -2,6 +2,19 @@ package coursera
 
 import "fmt"
 
+func ModuleOne() {
+	var input int
+	var numbers []int
+
+	fmt.Println("Enter integers: ")
+	for i := 0; i < 10; i++ {
+		fmt.Scan(&input)
+		numbers = append(numbers, input)
+	}
+
+	BubbleSort(numbers)
+}
+
 func BubbleSort(slice []int) {
 	fmt.Println("presorted slice: ", slice)
 	for i := 0; i < len(slice)-1; i++ {
