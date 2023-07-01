@@ -3,5 +3,7 @@ package main
 import "GolangSnippets/coursera"
 
 func main() {
-	coursera.ModuleOne()
+	//testFn := coursera.GenDisplaceFn(3, 4, 2)
+	//fmt.Println(testFn(2))
+	coursera.ModuleThree()
 }
