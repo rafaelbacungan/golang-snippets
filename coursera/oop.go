@@ -4,30 +4,30 @@ import (
 	"fmt"
 )
 
-type Animal struct {
+type Animals struct {
 	foodEaten  string
 	locomotion string
 	sound      string
 }
 
-func (a Animal) Eat() string {
+func (a Animals) Eat() string {
 	return a.foodEaten
 }
 
-func (a Animal) Move() string {
+func (a Animals) Move() string {
 	return a.locomotion
 }
 
-func (a Animal) Speak() string {
+func (a Animals) Speak() string {
 	return a.sound
 }
 
 func ModuleThree() {
 	var animal, action string
-	animals := map[string]Animal{
-		"cow":   Animal{"grass", "walk", "moo"},
-		"bird":  Animal{"worms", "fly", "peep"},
-		"snake": Animal{"mice", "slither", "hsss"},
+	animals := map[string]Animals{
+		"cow":   Animals{"grass", "walk", "moo"},
+		"bird":  Animals{"worms", "fly", "peep"},
+		"snake": Animals{"mice", "slither", "hsss"},
 	}
 
 	fmt.Print(">")
