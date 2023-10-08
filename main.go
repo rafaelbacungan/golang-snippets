@@ -1,12 +1,11 @@
 package main
 
 import (
-	"GolangSnippets/codewarsSolutions"
-	"fmt"
+	"GolangSnippets/concurrency"
 )
 
 func main() {
-	// binaryArray
-	val := codewarsSolutions.Binarray([]int{1, 1, 0, 1, 1, 0, 1, 1})
-	fmt.Println(val)
+	// Concurrency Sample
+	concurrency.ConcurrencySample2()
+	concurrency.ConcurrencySample3()
 }
