@@ -1,11 +1,9 @@
 package main
 
 import (
-	"GolangSnippets/concurrency"
+	go_gin "GolangSnippets/go-gin"
 )
 
 func main() {
-	// Concurrency Sample
-	concurrency.ConcurrencySample2()
-	concurrency.ConcurrencySample3()
+	go_gin.RunSnippet()
 }
